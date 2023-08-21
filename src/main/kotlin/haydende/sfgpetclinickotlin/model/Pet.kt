@@ -1,13 +1,25 @@
 package haydende.sfgpetclinickotlin.model
 
+import jakarta.persistence.*
 import java.time.LocalDate
 
-data class Pet(
-    override val id: Long,
-    var name: String,
-    val birthDate: LocalDate,
-    val petType: PetType,
-    var owner: Owner,
-    val visits: Set<Visit>
-) : BaseEntity(id) {
+@Entity
+open class Pet(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    open var id: Long?,
+    @Column
+    open var name: String?,
+    @Column
+    open val birthDate: LocalDate?,
+    @OneToOne
+    open var petType: PetType?,
+    @ManyToOne
+    open var owner: Owner?,
+    @OneToMany(
+        mappedBy = "pet",
+        cascade = [CascadeType.ALL]
+    )
+    open var visits: MutableSet<Visit>?
+) {
 }

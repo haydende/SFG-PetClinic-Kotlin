@@ -1,11 +1,31 @@
 package haydende.sfgpetclinickotlin.model
 
-data class Owner(
-    override val id: Long,
-    override var firstName: String,
-    override var secondName: String,
-    var city: String,
-    var telephone: String,
-    val pets: Set<Pet>
-) : Person(id, firstName, secondName) {
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
+
+@Entity
+open class Owner(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    open var id: Long? = null,
+    open var firstName: String? = null,
+    open var lastName: String? = null,
+    open var city: String?,
+    open var telephone: String?,
+
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "owner")
+    open var pets: MutableSet<Pet?> = mutableSetOf()
+) {
+
+    override fun equals(other: Any?): Boolean {
+        if (other is Owner) {
+            return this.id == other.id
+        }
+        return false
+    }
+
 }

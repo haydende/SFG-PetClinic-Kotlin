@@ -1,7 +1,12 @@
 package haydende.sfgpetclinickotlin.model
 
-data class PetType(
-    override val id: Long,
-    val name: String
-) : BaseEntity(id) {
-}
+import jakarta.persistence.*
+
+@Entity
+open class PetType(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    open var id: Long? = null,
+    @Column
+    open val name: String? = null
+)

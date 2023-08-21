@@ -1,11 +1,16 @@
 package haydende.sfgpetclinickotlin.model
 
+import jakarta.persistence.*
 import java.time.LocalDate
 
-data class Visit(
-    override val id: Long,
-    val date: LocalDate,
-    var description: String,
-    val pet: Pet
-) : BaseEntity(id) {
-}
+@Entity
+open class Visit(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    open var id: Long?,
+    open val date: LocalDate,
+    open var description: String,
+    @ManyToOne
+    @JoinColumn(name = "pet_id")
+    open var pet: Pet
+)
