@@ -5,21 +5,26 @@ import java.time.LocalDate
 
 @Entity
 open class Pet(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Long?,
+
+    id: Long? = null,
+
     @Column
-    open var name: String?,
+    open var name: String? = null,
+
     @Column
-    open val birthDate: LocalDate?,
+    open val birthDate: LocalDate? = null,
+
     @OneToOne
-    open var petType: PetType?,
+    open var petType: PetType? = null,
+
     @ManyToOne
-    open var owner: Owner?,
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    open var owner: Owner? = null,
+
     @OneToMany(
         mappedBy = "pet",
         cascade = [CascadeType.ALL]
     )
-    open var visits: MutableSet<Visit>?
-) {
-}
+    open var visits: MutableSet<Visit?> = mutableSetOf()
+
+): BaseEntity(id)
